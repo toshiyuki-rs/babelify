@@ -100,7 +100,13 @@ function normalizeTransformBasedir(opts) {
 }
 
 function normalizeTransformOpts(opts) {
-  opts = Object.assign({}, opts);
+	if (typeof opts._flags !== 'undefined'
+		&& opts._flags.babel) {
+		const tmpOpts = Object.assign({}, opts._flags.babel);
+		opts = Object.assign(tmpOpts, opts);
+	} else {
+  	opts = Object.assign({}, opts);
+	}
 
   // browserify cli options
   delete opts._;
